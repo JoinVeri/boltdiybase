@@ -325,7 +325,16 @@ const BusinessDetail = () => {
               />
             </div>
 
-            {/* Photo Gallery */}
+
+
+            {/* About */}
+            <section>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">About {business.name}</h2>
+              <p className="text-gray-700 leading-relaxed">
+                {business.description || `${business.name} is a local business located in ${business.city}, ${business.state}.`}
+              </p>
+            </section>
+                        {/* Photo Gallery */}
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 <div className="flex items-center space-x-2">
@@ -337,14 +346,6 @@ const BusinessDetail = () => {
                 businessId={business.id} 
                 mainImage={business.image_url}
               />
-            </section>
-
-            {/* About */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">About {business.name}</h2>
-              <p className="text-gray-700 leading-relaxed">
-                {business.description || `${business.name} is a local business located in ${business.city}, ${business.state}.`}
-              </p>
             </section>
           </div>
 
