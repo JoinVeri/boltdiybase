@@ -1,0 +1,54 @@
+<!--
+  SAMPLE BADGE SVG
+  ----------------
+  1) Outer circle (black background)
+  2) Silver ring
+  3) Stylized "V-L" path with a silver gradient
+  4) Feel free to adjust path coordinates, colors, or the gradient as needed.
+-->
+<svg
+  width="400"
+  height="400"
+  viewBox="0 0 400 400"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
+  <!-- Define gradient(s) for a metallic/silver effect -->
+  <defs>
+    <linearGradient id="silverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ececec"/>
+      <stop offset="100%" stop-color="#aaaaaa"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1) Background Circle -->
+  <circle 
+    cx="200" 
+    cy="200" 
+    r="200" 
+    fill="#111111"  <!-- dark/black -->
+  />
+
+  <!-- 2) Outer Ring (Badge Edge) -->
+  <circle
+    cx="200"
+    cy="200"
+    r="180"
+    fill="none"
+    stroke="url(#silverGradient)"
+    stroke-width="10"
+  />
+
+  <!-- 3) Center Logo/Shape -->
+  <!-- This path is a simple placeholder. Modify its 'd' attribute to match your actual logo. -->
+  <path
+    d="M 160 130 L 180 190 L 200 170 L 220 190 L 240 130"
+    fill="none"
+    stroke="url(#silverGradient)"
+    stroke-width="15"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+</svg>

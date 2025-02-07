@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-primary-50 text-primary-600 antialiased;
+  }
+}
+
+@layer components {
+  /* Primary Button - Deep Teal */
+  .btn-apple {
+    @apply px-4 py-2 rounded-lg bg-primary-500 text-primary-50 font-medium 
+           hover:bg-primary-600 transition-colors duration-300 
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  /* Secondary Button - Sage Green */
+  .btn-apple-secondary {
+    @apply px-4 py-2 rounded-lg bg-primary-300 text-primary-50 font-medium 
+           hover:bg-primary-400 transition-colors duration-300 
+           focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2;
+  }
+
+  /* Ghost Button - Warm Brown */
+  .btn-apple-ghost {
+    @apply px-4 py-2 rounded-lg bg-transparent text-accent-500 font-medium 
+           hover:bg-accent-50 transition-colors duration-300 
+           focus:outline-none focus:ring-2 focus:ring-accent-200 focus:ring-offset-2;
+  }
+
+  /* Link Style - Deep Teal */
+  .link-apple {
+    @apply text-primary-500 hover:text-primary-600 transition-colors duration-300;
+  }
+
+  /* Card Style */
+  .card-apple {
+    @apply bg-white rounded-2xl shadow-lg overflow-hidden 
+           hover:shadow-xl transition-shadow duration-300;
+  }
+
+  /* Input Style */
+  .input-apple {
+    @apply w-full px-4 py-2 rounded-lg border border-primary-200 
+           focus:ring-2 focus:ring-primary-500 focus:border-primary-500 
+           placeholder-primary-300 transition-colors duration-300;
+  }
+
+  /* Navigation Style */
+  .nav-apple {
+    @apply bg-primary-50/80 backdrop-blur-md border-b border-primary-100;
+  }
+
+  /* Small Button */
+  .btn-apple-sm {
+    @apply px-3 py-1.5 text-sm rounded-lg;
+  }
+
+  /* Large Button */
+  .btn-apple-lg {
+    @apply px-6 py-3 text-lg rounded-lg;
+  }
+}
