@@ -535,20 +535,15 @@ const CustomerDashboard = () => {
           {/* Profile Section */}
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
-                <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                  <User className="h-6 w-6 text-blue-600" />
-                </div>
-                <div>
+              <div className="flex flex-col">
                   <h3 className="font-medium">
                     {user?.user_metadata?.first_name ? `${user.user_metadata.first_name} ${user.user_metadata.last_name}` : user?.email?.split('@')[0]}
                   </h3>
                   <p className="text-sm text-gray-500">{user?.email}</p>
                 </div>
-              </div>
-              <button
-                onClick={() => setShowProfileModal(true)}
-                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                <button
+                  onClick={() => setShowProfileModal(true)}
+                  sclassName="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
               >
                 <Settings className="h-5 w-5" />
               </button>
