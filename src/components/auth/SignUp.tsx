@@ -18,38 +18,35 @@ const SignUp = () => {
     setLoading(true);
     setError(null);
 
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          user_type: userType,
+    try {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { user_type: userType },
         },
-      },
-    });
+      });
 
-    if (signUpError) {
-      // Handle "user already exists" error with a more friendly message
-      if (signUpError.message === 'User already registered') {
-        setError(
-          <span>
-            This email is already registered.{' '}
-            <Link to="/signin" className="text-blue-600 hover:text-blue-800 font-medium">
-              Sign in instead
-            </Link>
-          </span>
-        );
-      } else {
-        setError(signUpError.message);
+      if (signUpError) {
+        if (signUpError.message === 'User already registered') {
+          setError('This email is already registered. Please sign in instead.');
+        } else {
+          setError(signUpError.message);
+        }
+        setLoading(false);
+        return;
       }
-      setLoading(false);
-    } else {
-      // Route based on user type
+
+      // ✅ Redirect users based on their type
       if (userType === 'business') {
         navigate('/onboarding/business');
       } else {
         navigate('/signup-success');
       }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,7 +66,15 @@ const SignUp = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
-              {error}
+              {error} {/* ✅ Now rendering plain text error messages */}
+              {error.includes("already registered") && (
+                <span>
+                  {' '}
+                  <Link to="/signin" className="text-blue-600 hover:text-blue-800 font-medium">
+                    Sign in instead
+                  </Link>
+                </span>
+              )}
             </div>
           )}
 
