@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Key, Save } from 'lucide-react';
+import { Key } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const UpdatePassword = () => {
@@ -13,24 +13,26 @@ const UpdatePassword = () => {
   useEffect(() => {
     const handlePasswordRecovery = async () => {
       try {
-        // Get the type and access token from the URL
+        // Get query parameters from the URL fragment
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
         const type = hashParams.get('type');
         const accessToken = hashParams.get('access_token');
+        const refreshToken = hashParams.get('refresh_token'); // ✅ Get refresh token
 
         console.log('Recovery type:', type);
         console.log('Access token exists:', !!accessToken);
+        console.log('Refresh token exists:', !!refreshToken);
 
-        if (type !== 'recovery' || !accessToken) {
+        if (type !== 'recovery' || !accessToken || !refreshToken) {
           console.log('Invalid recovery parameters');
           navigate('/signin');
           return;
         }
 
-        // Set the session with the recovery token
-        const { data, error: sessionError } = await supabase.auth.setSession({
+        // ✅ Set session using access and refresh tokens
+        const { error: sessionError } = await supabase.auth.setSession({
           access_token: accessToken,
-          refresh_token: '',
+          refresh_token: refreshToken,
         });
 
         if (sessionError) {
@@ -38,7 +40,7 @@ const UpdatePassword = () => {
           throw sessionError;
         }
 
-        console.log('Session established:', !!data.session);
+        console.log('Session established successfully.');
       } catch (err) {
         console.error('Recovery setup error:', err);
         setError('Unable to process recovery token. Please try resetting your password again.');
@@ -55,7 +57,7 @@ const UpdatePassword = () => {
     setError(null);
 
     try {
-      // Validate passwords match
+      // Validate password match
       if (password !== confirmPassword) {
         throw new Error('Passwords do not match');
       }
@@ -67,9 +69,9 @@ const UpdatePassword = () => {
 
       console.log('Updating password...');
 
-      // Update the password
+      // ✅ Update the password
       const { error: updateError } = await supabase.auth.updateUser({
-        password: password
+        password: password,
       });
 
       if (updateError) {
@@ -77,16 +79,16 @@ const UpdatePassword = () => {
         throw updateError;
       }
 
-      console.log('Password updated successfully');
+      console.log('Password updated successfully!');
 
-      // Get the current session
+      // ✅ Get the current user session
       const { data: { session } } = await supabase.auth.getSession();
-      
-      // Determine where to redirect based on user type
+
+      // ✅ Redirect user based on their type (business or customer)
       const userType = session?.user?.user_metadata?.user_type;
       const redirectPath = userType === 'business' ? '/dashboard/business' : '/dashboard/customer';
 
-      // Success - redirect to appropriate dashboard
+      // ✅ Navigate to the correct dashboard
       navigate(redirectPath);
     } catch (err) {
       console.error('Password update error:', err);
@@ -100,9 +102,7 @@ const UpdatePassword = () => {
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-md">
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Update Password</h2>
-          <p className="text-gray-600">
-            Please enter your new password below.
-          </p>
+          <p className="text-gray-600">Please enter your new password below.</p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
